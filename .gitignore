@@ -1,2 +1,5 @@
-drone-registry-plugin
+.DS_Store
 .env
+.envrc
+__debug_bin
+drone-registry-plugin
