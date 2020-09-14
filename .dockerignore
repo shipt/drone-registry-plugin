@@ -1,0 +1,9 @@
+.DS_Store
+.env
+.envrc
+.git
+.github
+.gitignore
+.vscode
+__debug_bin
+docker-compose*

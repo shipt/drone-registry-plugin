@@ -3,23 +3,40 @@ name: default
 
 steps:
 - name: build
-  image: golang:1.12
+  image: golang:1.14
   environment:
     CGO_ENABLED: "0"
   commands:
   - go test -v -cover ./...
   - go build
 
-- name: publish
-  image: plugins/docker
+- name: publish_main
+  image: plugins/ecr
   settings:
-    auto_tag: true
-    repo: drone/registry-plugin
-    password:
-      from_secret: docker_password
-    username:
-      from_secret: docker_username
+    registry:
+     from_secret: aws_ecr_platform_east1
+    repo: drone-registry-plugin
+    tags:
+      - ${DRONE_COMMIT:0:7}
   when:
-    event:
-    - push
-    - tag
+    ref:
+      - refs/heads/main
+
+- name: publish_tag
+  image: plugins/ecr
+  settings:
+    registry:
+     from_secret: aws_ecr_platform_east1
+    repo: drone-registry-plugin
+    tags:
+      - ${DRONE_COMMIT:0:7}
+      - ${DRONE_TAG}
+  when:
+    ref:
+      - refs/tags/[0-9].[0-9].[0-9]
+
+trigger:
+  event:
+  - push
+  - pull_request
+  - tag
