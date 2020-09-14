@@ -1,3 +1,5 @@
+# :warning: This is a `PUBLIC` repository.
+
 This plugin provides global registry credentials for pulling pipeline images. This plugin is a direct port of the global registry credentials file in Drone 0.8. See https://0-8-0.docs.drone.io/setup-global-registry-credentials/
 
 # Credentials File
